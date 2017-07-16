@@ -1,1 +1,1 @@
-from AvailableBooks import AvailableBooks, Book
+from .AvailableBooks import AvailableBooks, Book
