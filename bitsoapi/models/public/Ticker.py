@@ -10,10 +10,8 @@ class Ticker(BaseModel):
         for (param, value) in kwargs.items():
             if param == 'book':
                 setattr(self, 'book', value)
-            elif param == 'ask':
-                setattr(self, 'ask', Decimal(str(value)))
-            elif param == 'bid':
-                setattr(self, 'bid', Decimal(str(value)))
+            elif param == 'volume':
+                setattr(self, 'volume', Decimal(str(value)))
             elif param == 'high':
                 setattr(self, 'high', Decimal(str(value)))
             elif param == 'last':
@@ -22,13 +20,15 @@ class Ticker(BaseModel):
                 setattr(self, 'low', Decimal(str(value)))
             elif param == 'vwap':
                 setattr(self, 'vwap', Decimal(str(value)))
-            elif param == 'volume':
-                setattr(self, 'volume', Decimal(str(value)))
+            elif param == 'ask':
+                setattr(self, 'ask', Decimal(str(value)))
+            elif param == 'bid':
+                setattr(self, 'bid', Decimal(str(value)))
             elif param == 'created_at':
                 setattr(self, 'created_at', dateutil.parser.parse(value))
 
     def __repr__(self):
         return "Ticker({Ticker})".format(
-            Ticker=self._repr('book', 'last')
+            Ticker=self._repr('book', 'volume', 'last')
         )
 
