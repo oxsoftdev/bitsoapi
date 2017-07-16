@@ -3,8 +3,7 @@ import hmac
 import json
 import requests
 import time
-from urlparse import urlparse
-from urllib import urlencode
+from urllib.parse import urlencode, urlparse
 
 
 def current_milli_time():
