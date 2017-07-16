@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from ._BaseModel import BaseModel
+from .._BaseModel import BaseModel
 
 
 class Book(BaseModel):
