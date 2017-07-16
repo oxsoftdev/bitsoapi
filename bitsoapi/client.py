@@ -1,4 +1,4 @@
-from .mixin.ApiClientMixin import ApiClientMixin
+from .mixins.ApiClientMixin import ApiClientMixin
 from .models import (
     AvailableBooks
 )
