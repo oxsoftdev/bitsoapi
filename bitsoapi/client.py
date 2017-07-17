@@ -44,6 +44,8 @@ class Api(ApiClientMixin):
             parameters['marker'] = kwargs['marker']
         if 'limit' in kwargs:
             parameters['limit'] = kwargs['limit']
+        else:
+            parameters['limit'] = 100
         if 'sort' in kwargs:
             parameters['sort'] = kwargs['sort']
         resp = self._request_url(url, 'GET', params=parameters)
