@@ -3,6 +3,7 @@ from .models import (
     AvailableBooks
     , Ticker
     , OrderBook
+    , Trade
 )
 
 
