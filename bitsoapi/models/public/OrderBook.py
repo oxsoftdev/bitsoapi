@@ -1,4 +1,7 @@
+import dateutil.parser
 from decimal import Decimal
+
+from .._BaseModel import BaseModel
 
 
 class Order(BaseModel):
@@ -16,7 +19,7 @@ class Order(BaseModel):
 
     def __repr__(self):
         return "Order({Order})".format(
-            Order=self._repr('book', 'amount', 'price'))
+            Order=self._repr('book', 'amount', 'price')
         )
 
 
@@ -29,9 +32,9 @@ class OrderBook(BaseModel):
         self.sequence=int(kwargs.get('sequence'))
 
         for order in kwargs.get('asks'):
-            self.asks.append(PublicOrder._NewFromJsonDict(order))
+            self.asks.append(Order._NewFromJsonDict(order))
         for order in kwargs.get('bids'):
-            self.bids.append(PublicOrder._NewFromJsonDict(order))
+            self.bids.append(Order._NewFromJsonDict(order))
 
     def __repr__(self):
         return "OrderBook({num_asks} asks, {num_bids} bids, updated_at={updated_at})".format(
