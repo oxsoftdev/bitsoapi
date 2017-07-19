@@ -19,7 +19,7 @@ class Trade(BaseModel):
             elif param == 'price':
                 setattr(self, 'price', Decimal(str(value)))
             elif param == 'tid':
-                setattr(self, 'tid', value)
+                setattr(self, 'tid', int(str(value)))
 
     def __repr__(self):
         return "Trade({Trade})".format(
