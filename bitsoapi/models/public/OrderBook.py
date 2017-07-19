@@ -29,7 +29,7 @@ class OrderBook(BaseModel):
         self.asks=[]
         self.bids=[]
         self.updated_at=dateutil.parser.parse(kwargs.get('updated_at'))
-        self.sequence=int(kwargs.get('sequence'))
+        self.sequence=int(str(kwargs.get('sequence')))
 
         for order in kwargs.get('asks'):
             self.asks.append(Order._NewFromJsonDict(order))
