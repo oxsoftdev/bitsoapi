@@ -1,4 +1,4 @@
-from .mixins.ApiClientMixin import ApiClientMixin
+from .mixins import ApiClientMixin
 from .models import (
     AvailableBooks
     , Ticker
@@ -7,7 +7,7 @@ from .models import (
 )
 
 
-class Api(ApiClientMixin):
+class Client(ApiClientMixin):
 
     def __init__(self, key=None, secret=None):
         self.base_url = 'https://bitso.com/api/v3'
