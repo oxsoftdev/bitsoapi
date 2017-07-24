@@ -1,4 +1,3 @@
-import dateutil.parser
 from decimal import Decimal
 
 from .._BaseModel import BaseModel
@@ -11,7 +10,7 @@ class Trade(BaseModel):
             if param == 'book':
                 setattr(self, 'book', value)
             elif param == 'created_at':
-                setattr(self, 'created_at', dateutil.parser.parse(value))
+                setattr(self, 'created_at', self._iso8601(value))
             elif param == 'amount':
                 setattr(self, 'amount', Decimal(str(value)))
             elif param == 'maker_side':
@@ -25,3 +24,4 @@ class Trade(BaseModel):
         return "Trade({Trade})".format(
             Trade=self._repr('book', 'tid', 'amount', 'price')
         )
+

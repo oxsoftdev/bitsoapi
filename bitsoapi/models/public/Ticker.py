@@ -1,4 +1,3 @@
-import dateutil.parser
 from decimal import Decimal
 
 from .._BaseModel import BaseModel
@@ -25,7 +24,7 @@ class Ticker(BaseModel):
             elif param == 'bid':
                 setattr(self, 'bid', Decimal(str(value)))
             elif param == 'created_at':
-                setattr(self, 'created_at', dateutil.parser.parse(value))
+                setattr(self, 'created_at', self._iso8601(value))
 
     def __repr__(self):
         return "Ticker({Ticker})".format(

@@ -1,5 +1,5 @@
 from .mixins import ApiClientMixin
-from .models import (
+from .models.public import (
     AvailableBooks
     , Ticker
     , OrderBook

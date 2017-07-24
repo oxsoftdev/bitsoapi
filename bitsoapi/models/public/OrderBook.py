@@ -1,4 +1,3 @@
-import dateutil.parser
 from decimal import Decimal
 
 from .._BaseModel import BaseModel
@@ -28,7 +27,7 @@ class OrderBook(BaseModel):
     def __init__(self, **kwargs):
         self.asks=[]
         self.bids=[]
-        self.updated_at=dateutil.parser.parse(kwargs.get('updated_at'))
+        self.updated_at=self._iso8601(kwargs.get('updated_at'))
         self.sequence=int(str(kwargs.get('sequence')))
 
         for order in kwargs.get('asks'):
@@ -41,3 +40,4 @@ class OrderBook(BaseModel):
             num_asks = len(self.asks),
             num_bids = len(self.bids),
             updated_at = self.updated_at)
+
