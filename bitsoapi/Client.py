@@ -19,14 +19,14 @@ class Client(ApiClientMixin):
     def available_books(self):
         url = '%s/available_books/' % self.base_url
         resp = self._request_url(url, 'GET')
-        return AvailableBooks._NewFromJsonDict(resp)
+        return AvailableBooks(resp)
 
     def ticker(self, book):
         url = '%s/ticker/' % self.base_url
         parameters = {}
         parameters['book'] = book
         resp = self._request_url(url, 'GET', params=parameters)
-        return Ticker._NewFromJsonDict(resp['payload'])
+        return Ticker(resp['payload'])
 
     def order_book(self, book, aggregate=True):
         url = '%s/order_book/' % self.base_url
@@ -34,7 +34,7 @@ class Client(ApiClientMixin):
         parameters['book'] = book
         parameters['aggregate'] = aggregate
         resp = self._request_url(url, 'GET', params=parameters)
-        return OrderBook._NewFromJsonDict(resp['payload'])
+        return OrderBook(resp['payload'])
 
     def trades(self, book, **kwargs):
         url = '%s/trades/' % self.base_url
@@ -49,5 +49,5 @@ class Client(ApiClientMixin):
         if 'sort' in kwargs:
             parameters['sort'] = kwargs['sort']
         resp = self._request_url(url, 'GET', params=parameters)
-        return [Trade._NewFromJsonDict(x) for x in resp['payload']]
+        return [Trade(o) for o in resp['payload']]
 
