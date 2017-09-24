@@ -32,9 +32,9 @@ class AvailableBooks(BaseModel):
 
     def __init__(self, **kwargs):
         self.books = []
-        for ob in kwargs.get('payload'):
-            self.books.append(ob['book'])
-            setattr(self, ob['book'], Book._NewFromJsonDict(ob))
+        for o in kwargs.get('payload'):
+            self.books.append(o['book'])
+            setattr(self, o['book'], Book(o))
 
     def __repr__(self):
         return "AvailableBooks(books={books})".format(books=','.join(self.books))
