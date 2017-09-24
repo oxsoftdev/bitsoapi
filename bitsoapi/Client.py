@@ -1,3 +1,4 @@
+from .errors import (ApiError, ApiClientError)
 from .mixins import ApiClientMixin
 from .models.public import (
     AvailableBooks
