@@ -52,3 +52,35 @@ class Client(ApiClientMixin):
         resp = self._request_url(url, 'GET', params=parameters)
         return [Trade(o) for o in resp['payload']]
 
+    # private api
+    
+    def account_status(self):
+        url = '%s/account_status/' % self.base_url
+        resp = self._request_url(url, 'GET', private=True)
+        return AccountStatus(resp['payload'])
+    
+    def balance(self):
+        url = '%s/balance/' % self.base_url
+        resp = self._request_url(url, 'GET', private=True)
+        return Balance(resp['payload'])
+    
+    def fees(self):
+        url = '%s/fees/' % self.base_url
+        resp = self._request_url(url, 'GET', private=True)
+        return Fees(resp['payload'])
+    
+    def ledger(self, operation='', marker=None, limit=25, sort='desc'):
+        _operations = ['', 'trades', 'fees', 'fundings', 'withdrawals']
+        if not isinstance(operation, str) and operation not in _operations:
+            raise ApiClientError({'message': 'invalid operation'})
+        url = '%s/ledger/%s' % (self.base_url, operation)
+        parameters = {}
+        if marker:
+            parameters['marker'] = marker
+        if limit:
+            parameters['limit'] = limit
+        if sort:
+            parameters['sort'] = sort
+        resp = self._request_url(url, 'GET', params=parameters, private=True)
+        return [LedgerEntry(o) for entry in resp['payload']]
+    
