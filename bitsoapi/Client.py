@@ -83,4 +83,69 @@ class Client(ApiClientMixin):
             parameters['sort'] = sort
         resp = self._request_url(url, 'GET', params=parameters, private=True)
         return [LedgerEntry(o) for entry in resp['payload']]
-    
+
+    def withdrawals(self):
+        raise NotImplementedError
+
+    def fundings(self):
+        raise NotImplementedError
+
+    def user_trades(self, tids=[], book=None, marker=None, limit=25, sort='desc'):
+        raise NotImplementedError
+
+    def order_trades(self, oid):
+        raise NotImplementedError
+
+    def open_orders(self, book=None):
+        raise NotImplementedError
+
+    def lookup_orders(self, oids):
+        raise NotImplementedError
+
+    def cancel_orders(self, oids):
+        if isinstance(oids, str):
+            oids = [oids]
+        url = '%s/orders/' % self.base_url
+        url+= '%s/' % ('-'.join(oids))
+        resp = self._request_url(url, 'DELETE', private=True)
+        return resp['payload']
+
+    def place_order(self, book, side, type, **kwargs):
+        _sides = ['buy', 'sell']
+        _types = ['market', 'limit']
+        if not isinstance(book, str) and not len(book):
+            raise ApiClientError({'message': 'book not specified'})
+        if not isinstance(side, str) and side not in _sides:
+            raise ApiClientError({'message': 'side not specified'})
+        if not isinstance(type, str) and type not in _types:
+            raise ApiClientError({'message': 'type not specified'})
+        if not str(kwargs.get('major','')).strip() and not str(kwargs.get('minor','')).strip():
+            raise ApiClientError({'message': 'an order must be specified in terms of major or minor, never both'})
+        if str(kwargs.get('price')).strip() and not (type == 'limit'):
+            raise ApiClientError({'message': 'price for use only with limit orders'})
+        url = '%s/orders/' % self.base_url
+        parameters = {}
+        parameters['book'] = book
+        parameters['type'] = type
+        parameters['side'] = side
+        if 'major' in kwargs:
+            parameters['major'] = kwargs.get('major')
+        if 'minor' in kwargs:
+            parameters['minor'] = kwargs.get('minor')
+        if 'price' in kwargs:
+            parameters['price'] = kwargs.get('price')
+        resp = self._request_url(url, 'POST', params=parameters, private=True)
+        return resp['payload']
+
+    def funding_destination(self, fund_currency):
+        raise NotImplementedError
+
+    def btc_withdrawal(self, amount, address):
+        raise NotImplementedError
+
+    def eth_withdrawal(self, amount, address):
+        raise NotImplementedError
+
+    def spei_withdrawal(self):
+        raise NotImplementedError
+
